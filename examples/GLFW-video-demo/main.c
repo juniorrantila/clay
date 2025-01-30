@@ -2,6 +2,11 @@
 #define GL_SILENCE_DEPRECATION
 #endif
 
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdlib.h>
+
 #define CLAY_IMPLEMENTATION
 #include "../../clay.h"
 #include "../../renderers/NanoVG/clay_renderer_NanoVG.c"
@@ -12,10 +17,7 @@
 #define NANOVG_GL3_IMPLEMENTATION
 #include <nanovg_gl.h>
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdint.h>
-#include <stdlib.h>
+
 
 
 int FONT_ID_BODY_16 = -1;
@@ -315,15 +317,16 @@ int main(void) {
     }
 
     uint64_t totalMemorySize = Clay_MinMemorySize();
-    Clay_Arena clayMemory = Clay_CreateArenaWithCapacityAndMemory(totalMemorySize, malloc(totalMemorySize));
+    Clay_Arena clayMemory = {0,totalMemorySize, malloc(totalMemorySize)};
 
 
-    Clay_SetMeasureTextFunction(Clay_NanoVG_MeasureText, (uintptr_t)nvg);
 
     int windowWidth = 0;
     int windowHeight = 0;
     glfwGetWindowSize(window, &windowWidth, &windowHeight);
     Clay_Initialize(clayMemory, (Clay_Dimensions) { (float)windowWidth, (float)windowHeight }, (Clay_ErrorHandler) { HandleClayErrors });
+    Clay_SetMeasureTextFunction(Clay_NanoVG_MeasureText, (uintptr_t)nvg);
+
     double NOW = glfwGetTime();
     double LAST = 0;
 
