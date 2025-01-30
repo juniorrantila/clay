@@ -26,6 +26,9 @@ static void Clay_NanoVG_Render(NVGcontext *nvg, Clay_RenderCommandArray commands
         Clay_RenderCommand* command = Clay_RenderCommandArray_Get(&commands, i);
         Clay_BoundingBox box = command->boundingBox;
         switch (command->commandType) {
+            case CLAY_RENDER_COMMAND_TYPE_NONE: {
+                break;
+            }
             case CLAY_RENDER_COMMAND_TYPE_RECTANGLE: {
                 Clay_RectangleElementConfig* config = command->config.rectangleElementConfig;
                 Clay_Color color = config->color;
