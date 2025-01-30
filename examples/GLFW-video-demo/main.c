@@ -337,7 +337,7 @@ int main(void) {
 
         LAST = NOW;
         NOW = glfwGetTime();
-        deltaTime = (double)((NOW - LAST)*1000 / (double)glfwGetTime());
+        deltaTime = (double)((NOW - LAST) / 1000.0);
 
         bool leftDown = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
         double mouseX = 0;
